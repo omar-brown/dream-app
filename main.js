@@ -16,11 +16,16 @@ form.addEventListener('submit', async (e) => {
             prompt: data.get('prompt'),
         })
     })
+    if (response.ok) {
+        const { image } = await response.json();
+        const result = document.querySelector('#result');
+        result.innerHTML = `<img src="${image}" width="512" />`;
+    } else {
+        const err = await response.text();
+        alert(err);
+        console.error(err)
+    }
 
-    const { image } = await response.json();
-
-    const result = document.querySelector('#result');
-    result.innerHTML = `<img src="${image}" width="512" />`;
     hideSpinner();
 })
 
